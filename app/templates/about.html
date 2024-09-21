@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block links %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/about.css')}}">
+{% endblock links %}
+{%block title%}About{%endblock%}
+
+
+{%block header_bottom%}
+<div class="header__bottom">
+    <div class="container">
+        <div class="header__bottom-inner">
+            <div class="header__bottom-text">
+                <div class="header__bottom-caption">About The Agency</div>
+                <div class="header__bottom-description">Welcome to Lian</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block main%}
+<main class="main">
+    <section class="skills">
+        <div class="skills-inner">
+            <div class="skills__img"></div>
+            <div class="skills__about">
+                <div class="skills__about-story">
+                    <div class="skills__about-story__caption caption skills__about-story__item">Our Story</div>
+                    <div class="skills__about-story__text skills__about-story__item">Lorem ipsum dolor sit amet
+                        consectetur adipisicing elit.
+                        Ea eaque ad cumque. Ipsum, aliquid. Est, vel! Corrupti voluptatem tempore ea quaerat itaque.
+                        Omnis voluptate esse nemo quo fugit dolor quidem.</div>
+                    <div class="skills__about-story__text skills__about-story__item">Lorem ipsum dolor sit amet
+                        consectetur adipisicing elit.
+                        Nobis porro quos recusandae animi esse voluptate, sed pariatur veniam earum ea doloremque,
+                        cumque veritatis qui magni eveniet, nihil rem? Cupiditate, quibusdam.</div>
+                </div>
+                <div class="skills__about-skills">
+                    <div class="skills__about-skills__caption caption skills__about-skills__item">Our Skills</div>
+                    <div class="skills__about-skills__features skills__about-skills__item">
+                        <div class="skills__about-skills__point">
+                            <div class="skills__point-caption">Photoshop</div>
+                            <div class="skills__point-bar">
+                                <div class="skills__point-bar__filled">
+                                    <div class="skills__point-bar__slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skills__about-skills__point">
+                            <div class="skills__point-caption">Branding</div>
+                            <div class="skills__point-bar">
+                                <div class="skills__point-bar__filled">
+                                    <div class="skills__point-bar__slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skills__about-skills__point">
+                            <div class="skills__point-caption">Photography</div>
+                            <div class="skills__point-bar">
+                                <div class="skills__point-bar__filled">
+                                    <div class="skills__point-bar__slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skills__about-skills__point">
+                            <div class="skills__point-caption">Web Design </div>
+                            <div class="skills__point-bar">
+                                <div class="skills__point-bar__filled">
+                                    <div class="skills__point-bar__slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="team">
+        <div class="container">
+            <div class="team--inner">
+                <div class="team__caption">Awesome Team</div>
+                <div class="team__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
+                    tempora unde fugiat beatae odit recusandae maiores, consequuntur facilis laborum. Unde assumenda
+                    molestias illo inventore excepturi repellendus consequatur minima ratione praesentium.</div>
+                <div class="team__list">
+                    <div class="teammate">
+                        <div class="teammate__photo">
+                            <img src="../static/images/about/team/1.png" alt="">
+                        </div>
+                        <div class="teammate__about">
+                            <div class="teammate__name">
+                                <div class="teammate__name-text">Lian Joy</div>
+                                <div class="teammate__name-profession">CEO/Founder</div>
+                            </div>
+                            <p class="teammate__about-text">
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                Similique atque est, accusamus, fuga magnam maxime nesciunt quos sapiente et dolor
+                                ipsa
+                                beatae nulla sint. Maiores.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="teammate">
+                        <div class="teammate__photo">
+                            <img src="../static/images/about/team/2.png" alt="">
+                        </div>
+                        <div class="teammate__about">
+                            <div class="teammate__name">
+                                <p class="teammate__name-text">Albert Thanh</p>
+                                <p class="teammate__name-profession">CEO/Founder</p>
+                            </div>
+                            <p class="teammate__about-text">
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                Similique atque est, accusamus, fuga magnam maxime nesciunt quos sapiente et dolor
+                                ipsa
+                                beatae nulla sint. Maiores.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="teammate">
+                        <div class="teammate__photo">
+                            <img src="../static/images/about/team/3.png" alt="">
+                        </div>
+                        <div class="teammate__about">
+                            <div class="teammate__name">
+                                <p class="teammate__name-text">Jenn Pereira</p>
+                                <p class="teammate__name-profession">CEO/Founder</p>
+                            </div>
+                            <p class="teammate__about-text">
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                Similique atque est, accusamus, fuga magnam maxime nesciunt quos sapiente et dolor
+                                ipsa
+                                beatae nulla sint. Maiores.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+{%block scripts%}
+{% endblock %}

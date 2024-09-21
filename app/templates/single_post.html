@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block links %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/single.css')}}">
+{% endblock links %}
+{%block title%}{{post.caption}}{%endblock%}
+{% block header_bottom %}
+<div class="header__bottom">
+    <div class="container">
+        <div class="header__bottom-inner">
+            <div class="header__bottom-text">
+                <div class="header__bottom-caption">News about Lian</div>
+                <div class="header__bottom-description">Latest news & insights</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock header_bottom %}
+{% block main %}
+<main>
+    <section class="post">
+        <div class="post-inner" data-postid="{{post.id}}">
+            <article>
+                <div class="post__caption">{{post.caption}}</div>
+                <div class="post__info">
+                    <span class="post__author post__info__item">{{userDB(post.user_id).get_name()}}</span>
+                    <span class="post__date post__info__item">{{post.date.strftime('%B %d, %Y')}}</span>
+                    <span class="post__likes post__info__item"><span class="number">&nbsp{{post.likes}}&nbsplikes</span>
+                </div>
+                <div class="post__article">
+                    <div class="post__content">
+                        {{post.text | safe}}
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+    <section class="comment">
+        <div class="comment-inner">
+            <form class="comment__form" name="comment-form" action="/blog/{{post.id}}/save_comment" method="post">
+                <fieldset class="comment__form-inner">
+                    <legend class="comment__caption">Leave a comment</legend>
+                    <div class="comment__input-container">
+                        <button type="button" class="comment__discard-btn unfilled_button comment__btn">✖</button>
+                        <textarea name="message" id="" cols="30" rows="10" class="comment__message comment__user-input"
+                            placeholder="Message"></textarea>
+                        <div class="comment__message_clone"></div>
+                        <button type="submit" class="comment__send-btn filled_button comment__btn">🡺</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </section>
+    <section class="comment_list">
+        <div class="comment_list-inner">
+            <p class="comment_list__caption">Comments</p>
+            <ul class="comment_list__list">
+                {%if comments.all()|length != 0%}
+                {%for el in comments%}
+                <li class="comment_list__item">
+                    <div class="comment_list__info">
+                        <figure class="comment_list__user-ava">
+                        <img src="/user_avatar/{{el.user_id}}" alt="" style="width: {{userDB(el.user_id).get_scale()}}%;">
+                        </figure>
+                        <div class="comment_list__aside-info">
+                            <div class="comment_list__user-name">{{userDB(el.user_id).get_name()}}</div>
+                            <div class="comment_list__user-date">on {{el.date.strftime('%B %d, %Y')}}</div>
+                        </div>
+                    </div>
+                    <pre class="comment_list__item__content">{{el.text}}</pre>
+                    <div class="comment_list__actions">
+                        <button type="button" class="comment_list__btn comment_list__like-btn link comment_list__actions_item">
+                            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.4675 5.23198C19.3152 3.97533 18.8316 2.9117 18.0383 2.05759C17.2458 1.20449 16.2682 0.693152 15.1278 0.534012C14.8704 0.499791 14.2611 0.499613 13.9958 0.534182C12.9587 0.67614 12.0475 1.12166 11.2776 1.86772C11.0061 2.131 10.6969 2.51129 10.5187 2.79804C10.4928 2.84 10.4666 2.88066 10.4446 2.91305C10.4342 2.92827 10.4212 2.94711 10.4076 2.96484C10.402 2.97231 10.389 2.98907 10.3721 3.00757C10.3648 3.01553 10.3457 3.0361 10.3184 3.0585C10.3051 3.06942 10.2784 3.09036 10.2411 3.11085C10.2136 3.12594 10.1247 3.17272 9.99994 3.17272C9.87509 3.17272 9.78627 3.12594 9.75879 3.11085C9.72146 3.09036 9.69473 3.06942 9.68142 3.0585C9.65413 3.0361 9.63502 3.01553 9.62773 3.00757C9.61079 2.98907 9.59788 2.97231 9.59219 2.96484C9.57868 2.94711 9.56559 2.92827 9.55525 2.91305C9.53326 2.88066 9.50708 2.84 9.4811 2.79804C9.30304 2.51124 8.99395 2.13115 8.72223 1.86772C7.96556 1.13447 7 0.534012 6 0.534012L4.85868 0.539782C2.77559 0.799521 1.02736 2.50583 0.599216 4.78491C0.408124 5.80575 0.501729 7.14776 0.852536 8.28419C1.22032 9.46706 1.83862 10.5134 2.93265 11.7549C3.45041 12.3416 3.89148 12.7817 5.38272 14.1952C5.74051 14.5337 6.14461 14.9179 6.27882 15.0499C6.27882 15.0499 7.68441 16.4986 8.5 17.5C9.11655 18.257 10 19.5 10 19.5C11 18 13.4744 15.1822 13.4744 15.1822C13.4744 15.1822 14.1213 14.5456 15.0868 13.622C16.5751 12.1941 17.3127 11.3933 17.9043 10.578C18.86 9.25774 19.3327 8.03313 19.4739 6.53112M19.4675 5.23198C19.4969 5.4772 19.5009 6.2289 19.4739 6.53112M19.4675 5.23198L19.4739 6.53112" stroke="black"/>
+                            </svg>                                
+                        </button>
+                        <button type="button" class="comment_list__like_num comment_list__actions_item">0</button>
+                        <button type="button" class="comment_list__btn comment_list__reply-btn link comment_list__actions_item">Reply</button>
+                        {%if el.user_id == current_user.get_id()%}
+                        <button type="button" class="comment_list__btn comment_list__delete-btn comment_list__actions_item">
+                            <svg width="18" xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 96 96"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path
+                                    d="m24,78c0,4.968 4.029,9 9,9h30c4.968,0 9-4.032 9-9l6-48h-60l6,48zm33-39h6v39h-6v-39zm-12,0h6v39h-6v-39zm-12,0h6v39h-6v-39zm43.5-21h-19.5c0,0-1.344-6-3-6h-12c-1.659,0-3,6-3,6h-19.5c-2.487,0-4.5,2.013-4.5,4.5s0,4.5 0,4.5h66c0,0 0-2.013 0-4.5s-2.016-4.5-4.5-4.5z" />
+                            </svg>
+                        </button>
+                        {%endif%}
+                        <button type="button" class="comment_list__btn comment_list__detail-btn link comment_list__actions_item">Show more</button>
+                    </div>
+                </li>
+                {%endfor%}
+                {%else%}
+                <p style="text-align: center;">There is no comments here</p>
+                {%endif%}
+            </ul>
+        </div>
+    </section>
+</main>
+{% endblock main %}
+{% block scripts %}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="../static/js/single.js"></script>
+{% endblock scripts %}

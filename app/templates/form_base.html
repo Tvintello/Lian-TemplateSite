@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/fonts.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/form_base.css')}}">
+    {% block links %}{% endblock links %}
+    <title>{%block title%}{%endblock%}</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__top">
+                <div class="container">
+                    <div class="header__top-inner">
+                        <div class="header__logo logo">
+                            <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 131 35" width="131"
+                                height="35">
+                                <image width="131" height="35"
+                                    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAjCAMAAACAX0m6AAAAAXNSR0IB2cksfwAAAmpQTFRFSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKQxusIQAAAM50Uk5TVaXy8fjUOQAFfvnz5z0dDwqX8JgJLMa1aVyw/f/ihvRCF7tmnv6HBi/BcVmr/Nw7BII/fMcWnGwBLc+8bjCAAuxYCOBE9aTRLiPIXb8gIqwYReOEEeTo04Fl9qoQ1ifQNvpe3w436YiF4RxRPEPr2Rt5zikTrmTJOIP7urcUYgxMEveOCweRmkjlJL162pWSMr4xSXTtOijezG1rKp2yYbgaoCVGGbPCc9szmybmlnANn8p71UoDVlOZ7u9/TkvY3cCNd6JHuR7EzUB4V8tWViniAAADx0lEQVR4nLXW918TMRQA8NoWUqEKspErQ62AgqIoolJQsAoutAwZKipYoEgLiIDIsooi7r0BxQHiRNxbcev/5CW5lmubXPnY6/uld3nvki+5cIlEMkEqlcnkHp6AHIqJXt4ymVQ5iZIHYLIPLeM7xctPxj7sH0DKBgbJ2Zx3cIgkdGoYw4aKNoYiHKaZiEjaQFHTplMNM9CzjHpmNCEb44FysbMks+Pi4eWcuZR+Euahbrzn0wZKZBYspKQCkrCBiViU7JhdvASmwpamuGzQKJn41DQnBmbZcjca0uPYZAZlMY0ZGNUK9xlCtTC7krwseQZmVaa7DFmrUVa7xqmBWbvOTYbwMDxA0HqnBiZ7g1sMG3Vc/+qcdKcGtb/tGxPHkBtnHSCP9H3hDPmbOESBQnRDcmERWm1oMoo3Uw1bIvGqYSJC+J8JUQxbS2BGuS0H/mzfQTWUlu1UYYReIrJBUY4yFSCzEv6WTKYZMgygahlGVO4S11BthAlTDUirRSXlVAOrC/HGiLrdYhrq96BEA3u5rhFeGZsEDIq9zRixzyCiodALtre0wus2KbwOtt+ieQbQ7s/9B62sF82wdQtslnWgm/1oTsyFAgYQlY0N8QcOimToPISaD3P9dR2Bdx5ZAgbQfZRDHIsWx9AVAVuPW5ZA+glUdTJBwABO1WGEtkEUg89p9BcVWA8OZ0ywQX9WyABWcJ+J/A4xDOfQKg/ibYWJaPdqsdkS7A1Ach4jSi+4brh4CbYV8ddgzWU0M1cEDeCqGSPqrrlqUFxHbT1l/MJeOWwzXRQ0JOATMsP03QCZLhmq0OFJ32FTGNCHl2WnkAG0X+cQN337S1wwGNbCFvVhhW1lNfpQ+d0SNIDbd7Ch+VjWXRcMA2j5Dd6zq+wcwrNcb20hGcB9biN/8LDu/w0xaEHGpzqUBqKDRNgj6yGBaABNJoyQy+0Mgw4bDs3w+AlqGK5xKFU8RZkRjbABPMtjxsLW8NwuKIYXaBc+/5Lg3R+Lal9ZFgrFAHpfEw1vkmorcvhxILGbaDDg17laozlliTNcZO5+i/rye+fEkDwgJxkcQ/qeaCjA5UYPkzU+WGLkIz4kfGoVNoD0z+Mz5HWRDJ555GqbUH9xYgC5ozaGYopB9xUbCviGg3HkYrs4ruEbSh0NwPDNYpiWIlnTQ+lHid8Fd3LVVqO7Nu24DMwoOlf43kQ3+u+OBnCtkSv9MSCpGlLpKgmh//kLz8NvI5vXfYA7Hegf3m42m+VOw8v4B83D5zcZ7LN/bxAMYFKQUsUmdcUN/wBnEeFhhNrpEQAAAABJRU5ErkJggg==" />
+                            </svg>
+                        </div>
+                        <nav class="header__nav">
+                            <ul class="header__nav-list header__nav-list--active">
+                                <li class="header__nav-list__item"><a href="/" class="header__nav-list__link">home</a>
+                                </li>
+                                <li class="header__nav-list__item"><a href="/about"
+                                        class="header__nav-list__link">about</a>
+                                </li>
+                                <li class="header__nav-list__item">
+                                    <a href="/portfolio" class="header__nav-list__link">portfolio</a>
+                                </li>
+                                <li class="header__nav-list__item"><a href="/blog"
+                                        class="header__nav-list__link">blog</a>
+                                </li>
+                                <li class="header__nav-list__item"><a href="/contact"
+                                        class="header__nav-list__link">contact</a>
+                                </li>
+                            </ul>
+                            <div class="header__actions">
+                                <button type="button" class="header__burger burger">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </button>
+                                <div class="header__search">
+                                    <input type="text" class="header__search-bar" placeholder="Search">
+                                    <button type="button" class="header__search-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="15px"
+                                            height="15px">
+                                            <path
+                                                d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z" />
+                                        </svg>
+                                    </button>
+                                    <a href="" class="header__close">&#10006;</a>
+                                </div>
+                            </div>
+                            <div class="header__user">
+                                {%if current_user.is_authenticated%}
+                                <a href="/profile" class="header__user-icon anchor-{{current_user.get_anchor()}}">
+                                    <img src="/user_avatar" alt="">
+                                </a>
+                                {%else%}
+                                <div class="header__user-actions">
+                                    <a href="/login" class="login-btn">log in</a>
+                                    <span>&nbsp/&nbsp</span>
+                                    <a href="/register" class="register-btn">register</a>
+                                </div>
+                                {%endif%}
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="header__mobile">
+                <div class="mobile__logo logo">
+                    <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 131 35" width="131" height="35">
+                        <image width="131" height="35"
+                            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAjCAMAAACAX0m6AAAAAXNSR0IB2cksfwAAAmpQTFRFSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKQxusIQAAAM50Uk5TVaXy8fjUOQAFfvnz5z0dDwqX8JgJLMa1aVyw/f/ihvRCF7tmnv6HBi/BcVmr/Nw7BII/fMcWnGwBLc+8bjCAAuxYCOBE9aTRLiPIXb8gIqwYReOEEeTo04Fl9qoQ1ifQNvpe3w436YiF4RxRPEPr2Rt5zikTrmTJOIP7urcUYgxMEveOCweRmkjlJL162pWSMr4xSXTtOijezG1rKp2yYbgaoCVGGbPCc9szmybmlnANn8p71UoDVlOZ7u9/TkvY3cCNd6JHuR7EzUB4V8tWViniAAADx0lEQVR4nLXW918TMRQA8NoWUqEKspErQ62AgqIoolJQsAoutAwZKipYoEgLiIDIsooi7r0BxQHiRNxbcev/5CW5lmubXPnY6/uld3nvki+5cIlEMkEqlcnkHp6AHIqJXt4ymVQ5iZIHYLIPLeM7xctPxj7sH0DKBgbJ2Zx3cIgkdGoYw4aKNoYiHKaZiEjaQFHTplMNM9CzjHpmNCEb44FysbMks+Pi4eWcuZR+Euahbrzn0wZKZBYspKQCkrCBiViU7JhdvASmwpamuGzQKJn41DQnBmbZcjca0uPYZAZlMY0ZGNUK9xlCtTC7krwseQZmVaa7DFmrUVa7xqmBWbvOTYbwMDxA0HqnBiZ7g1sMG3Vc/+qcdKcGtb/tGxPHkBtnHSCP9H3hDPmbOESBQnRDcmERWm1oMoo3Uw1bIvGqYSJC+J8JUQxbS2BGuS0H/mzfQTWUlu1UYYReIrJBUY4yFSCzEv6WTKYZMgygahlGVO4S11BthAlTDUirRSXlVAOrC/HGiLrdYhrq96BEA3u5rhFeGZsEDIq9zRixzyCiodALtre0wus2KbwOtt+ieQbQ7s/9B62sF82wdQtslnWgm/1oTsyFAgYQlY0N8QcOimToPISaD3P9dR2Bdx5ZAgbQfZRDHIsWx9AVAVuPW5ZA+glUdTJBwABO1WGEtkEUg89p9BcVWA8OZ0ywQX9WyABWcJ+J/A4xDOfQKg/ibYWJaPdqsdkS7A1Ach4jSi+4brh4CbYV8ddgzWU0M1cEDeCqGSPqrrlqUFxHbT1l/MJeOWwzXRQ0JOATMsP03QCZLhmq0OFJ32FTGNCHl2WnkAG0X+cQN337S1wwGNbCFvVhhW1lNfpQ+d0SNIDbd7Ch+VjWXRcMA2j5Dd6zq+wcwrNcb20hGcB9biN/8LDu/w0xaEHGpzqUBqKDRNgj6yGBaABNJoyQy+0Mgw4bDs3w+AlqGK5xKFU8RZkRjbABPMtjxsLW8NwuKIYXaBc+/5Lg3R+Lal9ZFgrFAHpfEw1vkmorcvhxILGbaDDg17laozlliTNcZO5+i/rye+fEkDwgJxkcQ/qeaCjA5UYPkzU+WGLkIz4kfGoVNoD0z+Mz5HWRDJ555GqbUH9xYgC5ozaGYopB9xUbCviGg3HkYrs4ruEbSh0NwPDNYpiWIlnTQ+lHid8Fd3LVVqO7Nu24DMwoOlf43kQ3+u+OBnCtkSv9MSCpGlLpKgmh//kLz8NvI5vXfYA7Hegf3m42m+VOw8v4B83D5zcZ7LN/bxAMYFKQUsUmdcUN/wBnEeFhhNrpEQAAAABJRU5ErkJggg==" />
+                    </svg>
+                </div>
+                <nav class="header__nav">
+                    <ul class="header__nav-list header__nav-list--active">
+                        <li class="header__nav-list__item"><a href="/" class="header__nav-list__link">home</a>
+                        </li>
+                        <li class="header__nav-list__item"><a href="/about" class="header__nav-list__link">about</a>
+                        </li>
+                        <li class="header__nav-list__item"><a href="/portfolio"
+                                class="header__nav-list__link">portfolio</a></li>
+                        <li class="header__nav-list__item"><a href="/blog" class="header__nav-list__link">blog</a>
+                        </li>
+                        <li class="header__nav-list__item"><a href="/contact" class="header__nav-list__link">contact</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="header__burger burger">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </button>
+                </nav>
+            </div>
+            <div class="header__bottom">
+                <div class="container">
+                    <div class="header__bottom-inner">
+                        <div class="header__bottom-text">
+                            <div class="header__bottom-caption">{%block header_caption%}{%endblock%}</div>
+                            <div class="header__bottom-description">{%block header_description%}{%endblock%}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section>
+                <div class="block-inner">
+                    <form class="form" method="post" enctype="multipart/form-data">
+                        <fieldset class="form-inner">
+                            {%for category, msg in get_flashed_messages(True)%} 
+                            <div class="flash flash-{{category}}">{{msg}}</div>
+                            {%endfor%}
+                            {%block inputs%}
+                            {%endblock%}
+                        </fieldset>
+                    </form>
+                </div>
+            </section>
+            {%block extras%}
+            {%endblock%}
+        </main>
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="footer__logo logo ">
+                    <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 131 35" width="131" height="35">
+                        <image width="131" height="35"
+                            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAjCAMAAACAX0m6AAAAAXNSR0IB2cksfwAAAmpQTFRFSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKQxusIQAAAM50Uk5TVaXy8fjUOQAFfvnz5z0dDwqX8JgJLMa1aVyw/f/ihvRCF7tmnv6HBi/BcVmr/Nw7BII/fMcWnGwBLc+8bjCAAuxYCOBE9aTRLiPIXb8gIqwYReOEEeTo04Fl9qoQ1ifQNvpe3w436YiF4RxRPEPr2Rt5zikTrmTJOIP7urcUYgxMEveOCweRmkjlJL162pWSMr4xSXTtOijezG1rKp2yYbgaoCVGGbPCc9szmybmlnANn8p71UoDVlOZ7u9/TkvY3cCNd6JHuR7EzUB4V8tWViniAAADx0lEQVR4nLXW918TMRQA8NoWUqEKspErQ62AgqIoolJQsAoutAwZKipYoEgLiIDIsooi7r0BxQHiRNxbcev/5CW5lmubXPnY6/uld3nvki+5cIlEMkEqlcnkHp6AHIqJXt4ymVQ5iZIHYLIPLeM7xctPxj7sH0DKBgbJ2Zx3cIgkdGoYw4aKNoYiHKaZiEjaQFHTplMNM9CzjHpmNCEb44FysbMks+Pi4eWcuZR+Euahbrzn0wZKZBYspKQCkrCBiViU7JhdvASmwpamuGzQKJn41DQnBmbZcjca0uPYZAZlMY0ZGNUK9xlCtTC7krwseQZmVaa7DFmrUVa7xqmBWbvOTYbwMDxA0HqnBiZ7g1sMG3Vc/+qcdKcGtb/tGxPHkBtnHSCP9H3hDPmbOESBQnRDcmERWm1oMoo3Uw1bIvGqYSJC+J8JUQxbS2BGuS0H/mzfQTWUlu1UYYReIrJBUY4yFSCzEv6WTKYZMgygahlGVO4S11BthAlTDUirRSXlVAOrC/HGiLrdYhrq96BEA3u5rhFeGZsEDIq9zRixzyCiodALtre0wus2KbwOtt+ieQbQ7s/9B62sF82wdQtslnWgm/1oTsyFAgYQlY0N8QcOimToPISaD3P9dR2Bdx5ZAgbQfZRDHIsWx9AVAVuPW5ZA+glUdTJBwABO1WGEtkEUg89p9BcVWA8OZ0ywQX9WyABWcJ+J/A4xDOfQKg/ibYWJaPdqsdkS7A1Ach4jSi+4brh4CbYV8ddgzWU0M1cEDeCqGSPqrrlqUFxHbT1l/MJeOWwzXRQ0JOATMsP03QCZLhmq0OFJ32FTGNCHl2WnkAG0X+cQN337S1wwGNbCFvVhhW1lNfpQ+d0SNIDbd7Ch+VjWXRcMA2j5Dd6zq+wcwrNcb20hGcB9biN/8LDu/w0xaEHGpzqUBqKDRNgj6yGBaABNJoyQy+0Mgw4bDs3w+AlqGK5xKFU8RZkRjbABPMtjxsLW8NwuKIYXaBc+/5Lg3R+Lal9ZFgrFAHpfEw1vkmorcvhxILGbaDDg17laozlliTNcZO5+i/rye+fEkDwgJxkcQ/qeaCjA5UYPkzU+WGLkIz4kfGoVNoD0z+Mz5HWRDJ555GqbUH9xYgC5ozaGYopB9xUbCviGg3HkYrs4ruEbSh0NwPDNYpiWIlnTQ+lHid8Fd3LVVqO7Nu24DMwoOlf43kQ3+u+OBnCtkSv9MSCpGlLpKgmh//kLz8NvI5vXfYA7Hegf3m42m+VOw8v4B83D5zcZ7LN/bxAMYFKQUsUmdcUN/wBnEeFhhNrpEQAAAABJRU5ErkJggg==" />
+                    </svg>
+                </div>
+                <div class="footer__socials">
+                    <ul class="footer__socials-list">
+                        <li class="footer__social-network">
+                            <a href="" class="footer__social-link">
+                                <a href="" class="footer__social-link">
+                                    <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="25"
+                                        height="25">
+                                        <title>Новый проект</title>
+                                        <defs>
+                                            <image width="25" height="25" id="insta2"
+                                                href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAzCAMAAAAAYbBfAAAAAXNSR0IB2cksfwAAAPlQTFRF+Pj4+fn59/f3n5+fQkJCHR0dIyMjVFRUwsLCXFxcAAAAAQEBAgICnp6era2tDg4O6enpYmJir6+vVlZWoKCghYWFzs7O6OjoGRkZ0tLSNjY2BAQEZGRk7u7u1NTUsrKyurq69vb29PT09fX1bGxsLy8vLi4uLS0tYGBgenp65OTkPT09EBAQExMTQUFBh4eH4+PjTU1NiYmJCwsLioqKaGhoTk5OHh4ePj4+BwcH3d3d+vr6cnJyHx8fi4uLuLi4AwMDODg4sbGx29vbBQUF1tbWWFhYRUVFsLCwnZ2djY2NjIyMW1tbPDw8eXl5bW1tg4OD7e3tpqamEQsSewAAAg5JREFUeJztlvtTEzEQx28XeXQDWJRaBQR5HYUAWlEpoPUByrO+/v8/xttsNs0dnWnaH5xxxszdTHKXT76b3c0jy/oF/DtaQeBnVA5xDKnCPBwDwjG5AhwVm3gwOTU9kzozcRvUiAzR7FyyVVzmHUT0sD6KfQvksUfJSOG6x8IQLaaayP5ukBd7kijkyOZTB5npZCmHPlsyZJZXnidSwBin4Orai2ZyInJHDDWQRkgRDOsAslLigHMiiOi6GwRDQnJlYzPqW0o52NrOt/N8p8WfW/lOzmU3y/Yadp/o4PDlq8ig/oBtcb3ltpXQUQ1fH2n0j95gCZFG2zjPR5Sh2lvS4BeVVmwcCvqOf8RaRfdj39+zDYTYTVza8seyqzraWUbSxslphmdY0mvLuKV5kYkMLN739xb7QIo+dD/Or3xS6vjeUh9Ifa5zxn0xOrfzbChl6OKrhOWbzm0tQctc+mlcqfb1cC2Osvw7V+qmmt0DKVl70FTqNkXrzke1rt7vIgyn1MKmhuy26vqBVFaiiLpJ3vhP/V0KekpVoxxRkiTfre30rN3i+g9blI61PyUV8FfR7PH7O+SGbqyyi8YbLMhxA7JeEPoS4dyHfiukqOyAiFD5LmOA6gCi14hH9B9LdxjQ08D94x0fg5nutuM3/YqamO9FvFna0R8bMgBgaWML9lUvUt5Cr4rjXX3+nfIH9+o6GTOAfbkAAAAASUVORK5CYII=" />
+                                        </defs>
+                                        <style>
+                                        </style>
+                                        <use id="Слой 2" href="#insta2" x="-4" y="-3" />
+                                    </svg>
+                                </a>
+                            </a>
+                        </li>
+                        <li class="footer__social-network">
+                            <a href="" class="footer__social-link">
+                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="25"
+                                    height="25">
+                                    <use id="Слой 2" href="#insta2" x="-4" y="-3" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="footer__social-network">
+                            <a href="" class="footer__social-link">
+                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="25"
+                                    height="25">
+                                    <use id="Слой 2" href="#insta2" x="-4" y="-3" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="footer__social-network">
+                            <a href="" class="footer__social-link">
+                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="25"
+                                    height="25">
+                                    <use id="Слой 2" href="#insta2" x="-4" y="-3" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="footer__social-network">
+                            <a href="" class="footer__social-link">
+                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="25"
+                                    height="25">
+                                    <use id="Слой 2" href="#insta2" x="-4" y="-3" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="footer__social-network">
+                            <a href="" class="footer__social-link">
+                                <svg version="1.2" viewBox="0 0 25 25" width="25" height="25">
+                                    <use id="Слой 2" href="#insta2" x="-4" y="-3" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="footer__social-network">
+                            <a href="" class="footer__social-link">
+                                <svg version="1.2" viewBox="0 0 25 25" width="25" height="25">
+                                    <use id="Слой 2" href="#insta2" x="-4" y="-3" />
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__copyright">© 2016 <span>Mulitix Theme</span> by ThemeForces. All Rights Reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    {%if current_user.is_authenticated%}
+    <script>$('.header__user-icon img').css('width', '{{current_user.get_scale()}}%')</script>
+    {%endif%}
+    {%block scripts%}
+    {% endblock %}
+</body>
+
+</html>

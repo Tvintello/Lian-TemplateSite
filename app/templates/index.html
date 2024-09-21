@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block links %}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+{%block title%}Lian{%endblock%}
+
+{%block header_bottom%}
+<div class="header__bottom">
+    <div class="header__bottom-inner">
+        <div class="header__slider">
+            <figure class="header__slider-image">
+                <img src="{{url_for('static', filename='images/header_slider/0.jpg')}}" class="img" alt="">
+                <div class="text">
+                    <div class="header__bottom-caption">Lian Creative Agency</div>
+                    <div class="header__bottom-description">Minimal Freelance Portfolio</div>
+                </div>
+            </figure>
+            <figure class="header__slider-image">
+                <img src="{{url_for('static', filename='images/header_slider/1.jpg')}}" class="img" alt="">
+                <div class="text">
+                    <div class="header__bottom-caption">Lian Creative Agency</div>
+                    <div class="header__bottom-description">Minimal Freelance Portfolio</div>
+                </div>
+            </figure>
+            <figure class="header__slider-image">
+                <img src="{{url_for('static', filename='images/header_slider/2.jpg')}}" class="img" alt="">
+                <div class="text">
+                    <div class="header__bottom-caption">Lian Creative Agency</div>
+                    <div class="header__bottom-description">Minimal Freelance Portfolio</div>
+                </div>
+            </figure>
+        </div>
+        <button class="header__slider-prev header__slider-arrow" type="button">
+            <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 28" width="25"
+                height="28">
+                <style>
+                    .s0 {
+                        fill: #ffffff
+                    }
+
+                    .s1 {
+                        fill: none;
+                        stroke: #ffffff;
+                        stroke-miterlimit: 100
+                    }
+                </style>
+                <g id="Prev">
+                    <path id="Rectangle 1" class="s0" d="m15.6 1.7l-12 12.2 0.7 0.7 12-12.2z" />
+                    <path id="Rectangle 1 copy" class="s0" d="m3.7 14l12.2 12.4 0.7-0.8-12.2-12.3z" />
+                    <path id="Ellipse 1" class="s1"
+                        d="m13-7c-11.6 0-21 9.5-21 21.2 0 11.8 9.4 21.3 21 21.3 11.6 0 21-9.5 21-21.3 0-11.7-9.4-21.2-21-21.2z" />
+                </g>
+            </svg>
+        </button>
+        <button class="header__slider-next header__slider-arrow" type="button">
+            <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25" width="14"
+                height="25">
+                <style>
+                    .s0 {
+                        fill: #ffffff
+                    }
+                </style>
+                <g id="Next + hover">
+                    <path id="Rectangle 1 copy" class="s0" d="m13.3 12.6l-12.2 12.3-0.7-0.7 12.2-12.4z" />
+                    <path id="Rectangle 1" class="s0" d="m1.4 0.2l12 12.2-0.7 0.7-12-12.1z" />
+                </g>
+            </svg>
+        </button>
+        <div class="header__slider-dots"></div>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+<main class="main">
+    <section class="offers">
+        <div class="container">
+            <div class="offers-inner">
+                <div class="offers__filter-container">
+                    <ul class="offers__filter__body">
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter="all"
+                                class="offers__fliter__body-item-btn">all</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--logo"
+                                class="offers__fliter__body-item-btn">logo</button>
+                            <span>/</span>
+                        </li>
+                        <li class=" offers__fliter__body-item">
+                                <button type="button" data-filter=".offers__filter--mobile"
+                                    class="offers__fliter__body-item-btn">mobile app</button>
+                                <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--wordpress"
+                                class="offers__fliter__body-item-btn">wordpress</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--web-design"
+                                class="offers__fliter__body-item-btn">web design</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--ui"
+                                class="offers__fliter__body-item-btn">Ui/Ux</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--branding"
+                                class="offers__fliter__body-item-btn">branding</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="offers__body offer-list">
+                    {% if products|length > 0 %}
+                    {%for el in products[0:15]%}
+                    <a href="/portfolio_details/{{el.id}}" class="mix offers__body__item offers__filter--{{el.tags}}">
+                        <img src="/load_port_image/{{el.id}}/0" alt="">
+                    </a>
+                    {%endfor%}
+                    {%else%}
+                    <p style="text-align: center;">Products waren`t found</p>
+                    {%endif%}
+                </div>
+                <button type="button" class="offers__load-btn load-btn">Load more</button>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+{%block scripts%}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="/static/js/mixitup.min.js"></script>
+<script src="/static/js/index.js"></script>
+{% endblock %}

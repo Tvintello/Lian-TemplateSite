@@ -1,0 +1,7 @@
+{% macro errors(field, prop='style: "margin-top: 0;"', pointer='pointer-bottom') -%}
+{% if field.errors %}
+{% for error in field.errors %}
+<div class="flash flash-error pointer-bottom" {{prop}}>{{ error }}</div>
+{% endfor %}
+{% endif %}
+{%- endmacro %}

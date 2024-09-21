@@ -1,0 +1,18 @@
+{% extends "form_base.html" %}
+
+{%block links%}
+{%endblock%}
+{%block title%}Profile{%endblock%}
+{%block header_caption%}Create your own blog{% endblock %}
+{% block header_description %}With easy tools{% endblock header_description %}
+{% block inputs %}
+<legend class="caption">Register</legend>
+{{ form.csrf_token() }}
+{{ form.name(class_="form_input", style_="max-width: 300px;", placeholder="Name") }}   
+{{ form.email(class_="form_input", style_="max-width: 300px;", placeholder="Email") }}   
+{{ form.password(class_="form_input", style_="max-width: 300px;", placeholder="Password for new account") }}   
+{{ form.password2(class_="form_input", style_="max-width: 300px;", placeholder="Confirm your password") }}   
+{{ form.submit(class_="form_submit", style_="max-width: 300px;") }}   
+{% endblock inputs%}
+{% block scripts %}
+{% endblock %}

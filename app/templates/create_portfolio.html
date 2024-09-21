@@ -1,0 +1,71 @@
+{% extends "form_base.html" %}
+{% from "macros/errors.html" import errors %}
+
+{% block links %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/create_port.css')}}">
+{% endblock links %}
+{%block title%}Create portfolio{%endblock%}
+{%block header_caption%}Publish your own product{% endblock %}
+{% block header_description %}With easy tools{% endblock header_description %}
+
+{% block inputs %}
+<legend class="caption">Publish new product</legend>
+
+{{ form.csrf_token() }}
+
+{{ errors(form.caption) }}
+{{ form.caption(class_="form_input", placeholder="caption") }}
+
+{{ errors(form.type) }}
+{{ form.type(class_="form_input", maxlength_="150", placeholder="type") }}
+
+{{ errors(form.text) }}
+{{ form.text(class_="form_input form_textarea", placeholder="description") }}
+
+{{ errors(form.roles) }}
+{{ form.roles(class_="form_input", id_="role", placeholder="role on project", maxlength_="50") }}
+
+{{ errors(form.tags) }}
+
+<div class="tags_list form_hor_list">
+    <span>Tags: </span>
+    <div class="tag_wrapper form_hor_list" id="tag_wrap">
+        <select id="tag" class="form_input form_highlighter tags_list__item tags_list__select" style="display: none;">
+            <option value="logo">logo</option>
+            <option value="mobile">mobile</option>
+            <option value="wordpress">wordpress</option>
+            <option value="web design">web design</option>
+            <option value="ui">ui</option>
+            <option value="ux">ux</option>
+            <option value="branding">branding</option>
+        </select>
+        <button type="button" class="unfilled_button delete_button tags_list__btn" id="delete"
+            style="display: none; margin: auto 0; border-left: none;">
+            <svg width="20" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 96 96"
+                xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: 0 auto;">
+                <path
+                    d="m24,78c0,4.968 4.029,9 9,9h30c4.968,0 9-4.032 9-9l6-48h-60l6,48zm33-39h6v39h-6v-39zm-12,0h6v39h-6v-39zm-12,0h6v39h-6v-39zm43.5-21h-19.5c0,0-1.344-6-3-6h-12c-1.659,0-3,6-3,6h-19.5c-2.487,0-4.5,2.013-4.5,4.5s0,4.5 0,4.5h66c0,0 0-2.013 0-4.5s-2.016-4.5-4.5-4.5z" />
+            </svg>
+        </button>
+    </div>
+    <button class="unfilled_button tags_list__item tags_list__btn" id="tags_btn" type="button"
+        style="font-size: 20px;">+</button>
+</div>
+
+{{ form.tags(id_="tags") }}
+
+<div class="form_container">
+    <label for="images" class="form_button form_container__item">Upload images</label>
+    <span id="file_stats" class="form_container__item">No files were choosen</span>
+</div>
+<div class="flash" id="file_warning" style="transition: all .1s ease; height: 0; margin: -10px;"></div>
+
+{{ form.images(id_="images", class_="form_file_input", accept_="image/png")}}
+{{ form.submit(class_="form_submit", id_="submit") }}
+
+{% endblock inputs %}
+
+{%block scripts%}
+<script src="{{url_for('static', filename='js/form_base.js')}}"></script>
+<script src="{{url_for('static', filename='js/create_port.js')}}"></script>
+{% endblock %}

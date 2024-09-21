@@ -1,0 +1,1 @@
+$((function(){$("#images").on("change",(function(){let e=document.getElementById("images").files;$("#file_stats").html(e.length+" files were choosen")}))}));

@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{%block links%}
+<link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
+{%endblock%}
+{%block title%}Profile{%endblock%}
+{% block main %}
+<main>
+    <section class="user_heading">
+        <div class="user_heading-inner">
+            {%for category, msg in get_flashed_messages(True)%}
+            <div class="flash flash-{{category}}">{{msg}}</div>
+            {%endfor%}
+            <button type="button" class="user_heading__icon anchor-{{current_user.get_anchor()}}">
+                <img src="/user_avatar" alt="">
+            </button>
+            <form action="/edit_avatar" style="display: none;" class="user_heading__edit_icon" method="post"
+                enctype="multipart/form-data">
+                <figcaption class="user_heading__edit-inner">
+                    <button type="button"
+                        class="user_heading__edit_icon-btn user_heading__edit_icon__close">&#10006;</button>
+                    <div
+                        class="user_heading__edit_icon__preview user_heading__edit_icon__item anchor-{{current_user.get_anchor()}}">
+                        <img src="/user_avatar" alt="">
+                    </div>
+                    <label for="binding"
+                        class="user_heading__edit_icon__title user_heading__edit_icon__item">Anchor</label>
+                    <select name="binding" id="binding"
+                        class="user_heading__edit_icon__item user_heading__edit_icon__anchor-select">
+                        <option value="center">center</option>
+                        <option value="left">left</option>
+                        <option value="right">right</option>
+                        <option value="up">top</option>
+                        <option value="down">bottom</option>
+                    </select>
+                    <label for="ava"
+                        class="user_heading__edit-input_btn user_heading__edit_icon__item user_heading__edit_icon-btn">Change
+                        avatar</label>
+                    <input class="user_heading__edit-input user_heading__edit-input_file user_heading__edit_icon__item"
+                        type="file" id="ava" name="avatar" id="">
+                    <label>
+                        <p class="user_heading__edit_icon__title user_heading__edit_icon__item">Scale</p>
+                        <input name="scale" id="scale" type="number"
+                            class="user_heading__edit-input user_heading__edit_icon__item"
+                            value="{{current_user.get_scale()}}">
+                    </label>
+                    <button type="submit" class="user_heading__edit_icon__item user_heading__edit_icon-btn">Save
+                        avatar</button>
+                </figcaption>
+            </form>
+            <div class="user_heading__info">
+                <div class="user_heading__name">
+                    <button class="user_heading__edit-btn user_heading__btn">&#9998;</button>
+                    <p class="user_heading__name__text">{{current_user.get_name()}}</p>
+                    <form action="/edit_name" style="display: none;" class="user_heading__edit_name-block"
+                        method="post">
+                        <figcaption class="user_heading__edit-inner">
+                            <input type="text" class="user_heading__edit-input" name="name"
+                                value="{{current_user.get_name()}}">
+                        </figcaption>
+                    </form>
+                </div>
+                <div class="user_heading__actions">
+                    <button href="" class="user_heading__details-btn user_heading__btn">details</button>
+                    <a href="/logout" class="user_heading__logout-btn user_heading__btn">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="user_body">
+        <div class="user_body-inner">
+            <aside class="user_body__aside">
+                <ul class="aside__btn-list">
+                    <li class="aside__btn-list__item">
+                        <button class="aside__btn-list__btn aside__btn-list__btn--active" id="my_blog">My blog</button>
+                    </li>
+                    <li class="aside__btn-list__item">
+                        <button class="aside__btn-list__btn" id="my_products">My products</button>
+                    </li>
+                </ul>
+            </aside>
+            <div class="user_body__info my_blog-page selected_page">
+                <div class="user_body__info__top">
+                    <div class="user_body__info__caption">My blog</div>
+                    <div class="user_body__info__actions">
+                        <button class="user_body__aside-btn burger user_body__info__actions__item">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </button>
+                        <a href="/create" class="user_body__info__add-btn user_body__info__actions__item"
+                            title="Add post">+</a>
+                    </div>
+                </div>
+                <div class="user_body__info__bottom">
+                    <ul class="user_body__info__list">
+                        {%if posts|length > 0%}
+                        {%for post in posts%}
+                        <li class="user_body__info__list__item">
+                            <a href="/blog/{{post.id}}" class="blog__list__item-content">
+                                <div class="blog__list__item-tag blog-content-item">
+                                    {{post.tag}}
+                                </div>
+                                <div class="blog__list__item-title blog-content-item">{{post.caption}}</div>
+                                <div class="blog__list__item-description blog-content-item">{{post.text[:50]|striptags}}
+                                </div>
+                            </a>
+                            <div class="blog__list__item-bottom">
+                                <div class="blog__list__item-date blog-content-item">on {{post.date.strftime('%B %d,
+                                    %Y')}}</div>
+                                <div class="blog__list__item-interactive">
+                                    <a href="/blog/{{post.id}}/edit" type="button"
+                                        class="blog__list__item-btn blog__list__item-edit_btn">&#9998;</a>
+                                    <button type="button"
+                                        class="blog__list__item-share-btn blog__list__item-btn blog-content-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                            viewBox="0 0 26 26">
+                                            <path
+                                                d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    {%if current_user.is_post_favorite(post.id) %}
+                                    {%set active = "blog__list__item-btn--active"%}
+                                    {%else%}
+                                    {%set active = ""%}
+                                    {%endif%}
+                                    <button type="button"
+                                        class="blog__list__item-like-btn blog__list__item-btn blog-content-item {{active}}"
+                                        data-postid="{{post.id}}">
+                                        <img width="14" height="14"
+                                            src="https://img.icons8.com/material-sharp/24/like--v1.png"
+                                            alt="like--v1" />
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                        {%endfor%}
+                        {%else%}
+                        <div class="user_body__info__warning">You haven`t any posts</div>
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+            <div class="user_body__info my_products-page">
+                <div class="user_body__info__top">
+                    <div class="user_body__info__caption">My products</div>
+                    <div class="user_body__info__actions">
+                        <button class="user_body__aside-btn burger user_body__info__actions__item">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </button>
+                        <a href="/create_portfolio" class="user_body__info__add-btn user_body__info__actions__item"
+                            title="Publish new product">+</a>
+                    </div>
+                </div>
+                <div class="user_body__info__bottom">
+                    <ul class="user_body__info__list">
+                        {%if products|length > 0%}
+                        {%for product in products%}
+                        <div class="product_item">
+                            <a href="/portfolio_details/{{product.id}}"
+                                class="mix product_item-link offers__filter--{{product.tags}}">
+                                <figure>
+                                    <img src="/load_port_image/{{product.id}}/0" alt="">
+                                </figure>
+                            </a>
+                            <div class="user_body__actions">
+                                <button type="button" data-productid="{{product.id}}"
+                                    class="user_body__delete_btn user_body__mini_btn">
+                                    <svg width="18" xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 96 96"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <path
+                                            d="m24,78c0,4.968 4.029,9 9,9h30c4.968,0 9-4.032 9-9l6-48h-60l6,48zm33-39h6v39h-6v-39zm-12,0h6v39h-6v-39zm-12,0h6v39h-6v-39zm43.5-21h-19.5c0,0-1.344-6-3-6h-12c-1.659,0-3,6-3,6h-19.5c-2.487,0-4.5,2.013-4.5,4.5s0,4.5 0,4.5h66c0,0 0-2.013 0-4.5s-2.016-4.5-4.5-4.5z" />
+                                    </svg>
+                                </button>
+                                <a href="/portfolio/{{product.id}}/edit" type="button" data-productid="{{product.id}}"
+                                    class="user_body__edit_btn user_body__mini_btn">&#9998;</a>
+                            </div>
+                        </div>
+                        {%endfor%}
+                        {%else%}
+                        <div class="user_body__info__warning">You haven`t any products</div>
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+        </div class="user_body-inner">
+    </section>
+    <div class="window">
+        <div class="window-inner">
+            <h2 class="window-caption">Are you sure to delete this product?</h2>
+            <div class="window-actions">
+                <a href="/product//delete" class="window-btn window-accept window__item">Accept</a>
+                <button type="button" class="window-btn window-cancel window__item">Cancel</button>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block scripts %}
+<script src="{{url_for('static', filename='js/profile.js')}}"></script>
+<script>$('.user_heading__icon img').css('width', '{{current_user.get_scale()}}%')</script>
+<script>$('#binding option[value={{current_user.get_anchor()}}]').prop('selected', true)</script>
+{% endblock %}

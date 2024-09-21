@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block links %}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/portfolio.css')}}">
+{% endblock %}
+{%block title%}Portfolio{%endblock%}
+{%block header_bottom%}
+<div class="header__bottom">
+    <div class="container">
+        <div class="header__bottom-inner">
+            <div class="header__bottom-text">
+                <div class="header__bottom-caption">latest projects</div>
+                <div class="header__bottom-description">We deliver quality</div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+{%block main%}
+<main class="main">
+    <section class="offers">
+        <div class="container">
+            <div class="offers-inner">
+                <div class="offers__filter-container">
+                    <ul class="offers__filter__body offer-list">
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter="all" class="offers__fliter__body-item-btn">all</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--logo"
+                                class="offers__fliter__body-item-btn">logo</button>
+                            <span>/</span>
+                        </li>
+                        <li class=" offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--mobile"
+                                class="offers__fliter__body-item-btn">mobile app</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--wordpress"
+                                class="offers__fliter__body-item-btn">wordpress</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--web_design"
+                                class="offers__fliter__body-item-btn">web design</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--ui .offers__filter--ux"
+                                class="offers__fliter__body-item-btn">Ui/Ux</button>
+                            <span>/</span>
+                        </li>
+                        <li class="offers__fliter__body-item">
+                            <button type="button" data-filter=".offers__filter--branding"
+                                class="offers__fliter__body-item-btn">branding</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="offers__body">
+                    {% if products|length > 0 %}
+                    {%for el in products[0:15]%}
+                    <a href="/portfolio_details/{{el.id}}" class="mix offers__body__item {{tags[el.id]}}">
+                        <img src="/load_port_image/{{el.id}}/0" alt="">
+                    </a>
+                    {%endfor%}
+                    {%else%}
+                    <p style="text-align: center;">Products waren`t found</p>
+                    {%endif%}
+                </div>
+                <button type="button" class="load-btn offers__load-btn">Load more</button>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+{%block scripts%}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="../static/js/mixitup.min.js"></script>
+<script src="../static/js/index.js"></script>
+{%endblock%}

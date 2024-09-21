@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{%block links%}
+<link rel="stylesheet" href="{{url_for('static', filename='css/contact.css')}}">
+{%endblock%}
+{%block title%}Contact{%endblock%}
+{%block header_bottom%}
+<div class="header__bottom">
+    <div class="container">
+        <div class="header__bottom-inner">
+            <div class="header__bottom-text">
+                <div class="header__bottom-caption">Get in touch</div>
+                <div class="header__bottom-description">Contact us today</div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+{%block main%}
+<main>
+    <section class="getintouch">
+        <article class="info">
+            <div class="info-inner">
+                <div class="info__caption">Office info</div>
+                <div class="info__description">People Behind the Success of our Company</div>
+                <div class="line"></div>
+                <div class="info__point info__item">
+                    <span class="info__point__title">Office Hours:</span>
+                    <span class="info__point__description">Mon-Friday 8am - 10pm</span>
+                </div>
+                <div class="info__point info__item">
+                    <span class="info__point__title">Address:</span>
+                    <span class="info__point__description">Igbalangao, Bugasong, Antique</span>
+                </div>
+                <div class="info__connection info__item">
+                    <div class="info__point">
+                        <span class="info__point__title">Tell:</span>
+                        <span class="info__point__number">123-456-7890</span>
+                    </div>
+                    <div class="info__point">
+                        <span class="info__point__title">Fax:</span>
+                        <span class="info__point__number">123-456-7890</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article class="message">
+            <div class="message-inner">
+                <form action="" class="message__form" method="post">
+                    <fieldset class="message__form-inner">
+                        <div class="message__input-list">
+                            <input name="name" type="text" class="message__input" placeholder="name">
+                            <input name="email" type="email" class="message__input" placeholder="email">
+                        </div>
+                        <textarea name="message" id="" cols="30" rows="10" class="message__input-area message__input"
+                            placeholder="Message"></textarea>
+                        <button type="submit" class="message__send-btn">Send message</button>
+                    </fieldset>
+                </form>
+            </div>
+        </article>
+    </section>
+    <div class="map">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7042.531780608458!2d-73.82987804890521!3d40.67710437147862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2673ee3e49f33%3A0xc75c52bdc5fd21b4!2z0JTQttCw0LzQtdC50LrQsCwg0J3RjNGOLdCZ0L7RgNC6IDExNDIwLCDQodCo0JA!5e0!3m2!1sru!2sru!4v1707494999427!5m2!1sru!2sru"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div class="pointer">
+            <div class="pointer__caption">Mulitix Big Wordpress Theme</div>
+            <div class="pointer__address">110-00 Rockaway Blvd</div>
+            <div class="pointer__address">South Ozone Park, NY 11420</div>
+            <button class="pointer__close-btn">&#215;</button>
+        </div>
+    </div>
+    <section class="values">
+        <div class="values-inner">
+            <p class="values__caption values__caption-item">Our Values</p>
+            <p class="values__description values__description-item">Lorem ipsum, dolor sit amet consectetur
+                adipisicing elit. Odit dolorem
+                maiores soluta alias? Excepturi fugiat, facilis quae nesciunt sapiente itaque iusto quibusdam
+                ratione aut ducimus amet voluptates rem architecto sunt.</p>
+            <div class="values__list">
+                <article class="values__list__item">
+                    <div class="values__list__item-image">
+                        <img src="../static/images/contact/shutterstock_433009291.jpg" alt="">
+                    </div>
+                    <p class="values__list__item-caption values__caption-item">who we are</p>
+                    <p class="values__list__item-description values__description-item">Lorem ipsum dolor sit amet
+                        consectetur adipisicing
+                        elit. Consequatur, exercitationem culpa eaque explicabo deleniti quis, dolores unde eligendi
+                        quisquam qui, labore incidunt amet molestiae reiciendis expedita facere eos! Enim,
+                        doloremque.</p>
+                </article>
+                <article class="values__list__item">
+                    <div class="values__list__item-image">
+                        <img src="../static/images/contact/shutterstock_432828019.jpg" alt="">
+                    </div>
+                    <p class="values__list__item-caption values__caption-item">our vision</p>
+                    <p class="values__list__item-description values__description-item">Lorem ipsum dolor sit amet
+                        consectetur, adipisicing
+                        elit. Obcaecati quis molestiae beatae debitis quo aliquam quibusdam enim harum quidem? Harum
+                        quisquam facere, consectetur ut repellendus vel magnam optio? Ipsam, aut.</p>
+                </article>
+                <article class="values__list__item">
+                    <div class="values__list__item-image">
+                        <img src="../static/images/header_slider/1.jpg" alt="">
+                    </div>
+                    <p class="values__list__item-caption values__caption-item">our mission</p>
+                    <p class="values__list__item-description values__description-item">Lorem ipsum dolor sit amet
+                        consectetur adipisicing
+                        elit. Enim nisi architecto, a voluptas sint aliquid dolores quos aperiam accusamus porro!
+                        Facilis voluptatem officia eum deleniti vero expedita ducimus sequi perspiciatis?</p>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+{%endblock%}
+{%block scripts%}
+<script src="../static/js/contact.js"></script>
+{%endblock%}

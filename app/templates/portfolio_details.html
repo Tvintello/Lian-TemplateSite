@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{%block links%}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/port_det.css')}}">
+{% endblock %}
+{%block title%}Portfolio details{%endblock%}
+{%block header_bottom%}
+<div class="header__bottom">
+    <div class="container">
+        <div class="header__bottom-inner">
+            <div class="header__bottom-text">
+                <div class="header__bottom-caption">latest projects</div>
+                <div class="header__bottom-description">We deliver quality</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+<main class="main">
+    <section class="project">
+        <div class="project__button-list-wrapper">
+            <div class="container">
+                <div class="project__button-list">
+                    <div class="project__arrows">
+                        <a href="/portfolio_details/{{previous}}" class="project__button-previous project__btn">
+                            <&nbspPrevious </button>
+                                <a href="/portfolio_details/{{pnext}}" class="project__button-next project__btn">
+                                    Next&nbsp> </button>
+                    </div>
+                    <a href="/portfolio" class="project__button-all project__btn">
+                        <div class="project__btn-burger">
+                            <span class="line">
+                                <span class="point"></span> <span class="dash"></span>
+                            </span>
+                            <span class="line">
+                                <span class="point"></span> <span class="dash"></span>
+                            </span>
+                            <span class="line">
+                                <span class="point"></span> <span class="dash"></span>
+                            </span>
+                        </div>
+                        <span>Show&nbspall</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="project-inner">
+                <div class="project__about">
+                    <div class="project__info">
+                        <div class="project__title">
+                            <div class="project__title-text">{{product.caption}}</div>
+                            <div class="project__title-type">{{product.ptype}}</div>
+                        </div>
+                        <div class="project__data">
+                            {%if userDB(product.user_id).is_product_favorite(product.id) %}
+                            {%set active = "project__like-btn--active"%}
+                            {%else%}
+                            {%set active = ""%} 
+                            {%endif%}
+                            <div class="project__data-nums">
+                                <span class="project__date">{{product.date.strftime('%B %d, %Y')}}</span>
+                                {%if current_user.is_authenticated %}
+                                <button type="button" data-product_id="{{product.id}}" class="project__like-btn {{active}}">♥</button>
+                                {%endif%}
+                                <span class="project__likes">&nbsp<span
+                                        class="likes_number">{{product.likes}}</span>&nbsplikes</span>
+                            </div>
+                            <div class="project__description">{{product.text}}</div>
+                        </div>
+                        <div class="project__role">
+                            <div class="project__role-title">Role On Project:</div>
+                            <div class="project__role-description">{{product.roles}}
+                            </div>
+                        </div>
+                        <div class="project__tags">
+                            <div class="project__tags-title">Tags</div>
+                            <div class="project__tags-list">{{product.tags}}</div>
+                        </div>
+                        <div class="project__social">
+                            <button class="project__share-btn project__btn"><span>Share</span></button>
+                            <ul class="project__social-list">
+                                <li class="project__social-network">
+                                    <a href="" class="project__social-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                            viewBox="0 0 50 50">
+                                            <path id="insta"
+                                                d="M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="project__social-network">
+                                    <a href="" class="project__social-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                            viewBox="0 0 50 50">
+                                            <path id="insta"
+                                                d="M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="project__social-network">
+                                    <a href="" class="project__social-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                            viewBox="0 0 50 50">
+                                            <path id="insta"
+                                                d="M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="project__social-network">
+                                    <a href="" class="project__social-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                            viewBox="0 0 50 50">
+                                            <path id="insta"
+                                                d="M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="project__social-network">
+                                    <a href="" class="project__social-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                            viewBox="0 0 50 50">
+                                            <path id="insta"
+                                                d="M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="project__social-network">
+                                    <a href="" class="project__social-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                            viewBox="0 0 50 50">
+                                            <path id="insta"
+                                                d="M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="project__social-network">
+                                    <a href="" class="project__social-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                            viewBox="0 0 50 50">
+                                            <path id="insta"
+                                                d="M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="project__view">
+                        <div class="project__view-wrapper">
+                            <div class="project__view-slider">
+                                {%for image in range(product.images|length)%}
+                                <button type="button" class="project__view__image">
+                                    <img class="project__view__image-img"
+                                        src="/load_port_image/{{product.id}}/{{image}}" alt="">
+                                </button>
+                                {%endfor%}
+                            </div>
+                            <div class="project__preview">
+                                <div class="project__view__dots"></div>
+                            </div>
+                            <p class="project__paging"><span class="project__paging-page">1/{{product.images|length}}</span> page</p>
+                        </div>
+                    </div>
+                    <div class="project__full_view">
+                        <button class="project__full_view__close">&#10006;</button>
+                        <img src="/load_port_image/{{product.id}}/0" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="related">
+        <div class="container">
+            <div class="related-inner">
+                <div class="related__caption">Related Works</div>
+                <div class="related__description">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam
+                    aliquid minima quisquam modi ducimus numquam dolorem consectetur quos delectus cupiditate.
+                </div>
+                <ul class="related__work-list">
+                    {% if related|length > 1 %}
+                    {%for el in related[0:3]|rejectattr(product.id) %}
+                    {% if el.id != product.id%}
+                    <li class="related__work-list__item">
+                        <a href="/portfolio_details/{{el.id}}" class=" related__work-list__link">
+                            <img src="/load_port_image/{{el.id}}/0" alt="">
+                        </a>
+                    </li>
+                    {% endif %}
+                    {%endfor%}
+                    {%else%}
+                    {%for el in plist.all()[0:3]%}
+                    <li class="related__work-list__item">
+                        <a href="/portfolio_details/{{el.id}}" class=" related__work-list__link">
+                            <img src="/load_port_image/{{el.id}}/0" alt="">
+                        </a>
+                    </li>
+                    {%endfor%}
+                    {%endif%}
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock main %}
+{% block scripts %}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="../static/js/port_det.js"></script>
+{% endblock scripts %}

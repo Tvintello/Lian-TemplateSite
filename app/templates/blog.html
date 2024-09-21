@@ -1,0 +1,456 @@
+{% extends "base.html" %}
+
+{%block links%}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/blog.css')}}">
+{%endblock%}
+{%block title%}Blog{%endblock%}
+{% block header_bottom %}
+<div class="header__bottom">
+    <div class="container">
+        <div class="header__bottom-inner">
+            <div class="header__bottom-text">
+                <div class="header__bottom-caption">News about Lian</div>
+                <div class="header__bottom-description">Latest news & insights</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+<main class="main">
+    <section class="blog">
+        <div class="blog-inner">
+            <div class="blog__list offer-list">
+                <div class="blog__list__item mix" id="blog_item" data-filt="aside__blog-filter--">
+                    <figure class="blog__list__item-image">
+                        <img src="" alt="">
+                    </figure>
+                    <a href="" class="blog__list__item-content">
+                        <div class="blog__list__item-tag blog-content-item"></div>
+                        <div class="blog__list__item-title blog-content-item"></div>
+                        <div class="blog__list__item-user blog-content-item"></div>
+                        <div class="blog__list__item-description blog-content-item"></div>
+                    </a>
+                    <div class="blog__list__item-bottom">
+                        <div class="blog__list__item-date blog-content-item"></div>
+                        <div class="blog__list__item-interactive">
+                            {%if current_user.is_authenticated%}
+                            <a href="" type="button"
+                                class="blog__list__item-btn blog__list__item-edit_btn">&#9998;</a>
+                            {%endif%}
+                            <button type="button"
+                                class="blog__list__item-share-btn blog__list__item-btn blog-content-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                    viewBox="0 0 26 26">
+                                    <path
+                                        d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                    </path>
+                                </svg>
+                            </button>
+                            {%if current_user.is_authenticated%}
+                            <button data-postid="" id="like"
+                                class="blog__list__item-like-btn blog__list__item-btn blog-content-item {{active}}">
+                                <img width="14" height="14" src="https://img.icons8.com/material-sharp/24/like--v1.png"
+                                    alt="like--v1" />
+                            </button>
+                            {%endif%}
+                            <span id="result"></span>
+                        </div>
+                    </div>
+                </div>
+                {%if posts|length > 0%}
+                {%for el in posts[0:7]%}
+                <div class="blog__list__item {{'aside__blog-filter--' + el.tag}} mix">
+                    {%if el.heading_image %}
+                    <figure class="blog__list__item-image">
+                        <img src="/load_post_heading/{{el.id}}" alt="">
+                    </figure>
+                    {%endif%}
+                    <a href="/blog/{{el.id}}" class="blog__list__item-content">
+                        <div class="blog__list__item-tag blog-content-item">
+                            {{el.tag}}
+                        </div>
+                        <div class="blog__list__item-title blog-content-item">{{el.caption}}</div>
+                        <div class="blog__list__item-user blog-content-item">by
+                            {{userDB(el.user_id).get_name()}}</div>
+                        <div class="blog__list__item-description blog-content-item">{{el.text[:50]|striptags}}</div>
+                    </a>
+                    <div class="blog__list__item-bottom">
+                        <div class="blog__list__item-date blog-content-item">on {{el.date.strftime('%B %d, %Y')}}</div>
+                        <div class="blog__list__item-interactive">
+                            {%if current_user.is_authenticated %}
+                            {%if current_user.get_name() ==
+                            userDB(el.user_id).get_name()%}
+                            <a href="/blog/{{el.id}}/edit" type="button"
+                                class="blog__list__item-btn blog__list__item-edit_btn">&#9998;</a>
+                            {%endif%}
+                            {%endif%}
+                            <button type="button"
+                                class="blog__list__item-share-btn blog__list__item-btn blog-content-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                    viewBox="0 0 26 26">
+                                    <path
+                                        d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                    </path>
+                                </svg>
+                            </button>
+                            {%if current_user.is_authenticated %}
+                            {%if current_user.is_post_favorite(el.id) %}
+                            {%set active = "blog__list__item-btn--active"%}
+                            {%else%}
+                            {%set active = ""%}
+                            {%endif%}
+                            {%endif%}
+                            {%if current_user.is_authenticated%}
+                            <button data-postid="{{el.id}}" id="like"
+                                class="blog__list__item-like-btn blog__list__item-btn blog-content-item {{active}}">
+                                <img width="14" height="14" src="https://img.icons8.com/material-sharp/24/like--v1.png"
+                                    alt="like--v1" />
+                            </button>
+                            {%endif%}
+                            <span id="result"></span>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+                {%set background = 'blog__background--hide' %}
+                {%endif%}
+            </div>
+            <div class="blog__background {{background}}">
+                <div class="blog__list__item">
+                    <div class="blog__list__item-content">
+                        <div class="blog__list__item-tag blog-content-item">Wordpress</div>
+                        <div class="blog__list__item-title blog-content-item">i am a blog post title</div>
+                        <div class="blog__list__item-user blog-content-item">by John Pereina</div>
+                        <div class="blog__list__item-description blog-content-item">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio sint dignissimos repellat
+                            vero nesciunt saepe ipsam sit pariatur nemo voluptatem? Nesciunt eos saepe labore natus
+                            mollitia officiis. Explicabo, repellat amet, quia eaque, tenetur illum tempora harum
+                            obcaecati aliquam ducimus exercitationem.
+                        </div>
+                    </div>
+                    <div class="blog__list__item-bottom">
+                        <div class="blog__list__item-date blog-content-item">on July 19, 2016</div>
+                        <div class="blog__list__item-interactive">
+                            <button type="button"
+                                class="blog__list__item-share-btn blog__list__item-btn blog-content-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                    viewBox="0 0 26 26">
+                                    <path
+                                        d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button type="button"
+                                class="blog__list__item-like-btn blog__list__item-btn blog-content-item">
+                                <img width="14" height="14" src="https://img.icons8.com/material-sharp/24/like--v1.png"
+                                    alt="like--v1" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog__list__item">
+                    <div class="blog__list__item-image">
+                        <img src="../static/images/header_body/tumblr_nlv9bp2AGA1sfyngeo2_1280-mokhgqwoip430hckostcf4rafjnml63dn1z0lg53a0.jpg"
+                            alt="">
+                    </div>
+                    <div class="blog__list__item-content">
+                        <div class="blog__list__item-title">i am a blog post title</div>
+                        <div class="blog__list__item-user">by John Pereina</div>
+                        <div class="blog__list__item-description">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio sint dignissimos repellat
+                            vero nesciunt saepe ipsam sit pariatur nemo voluptatem? Nesciunt eos saepe labore natus
+                            mollitia officiis. Explicabo, repellat amet, quia eaque, tenetur illum tempora harum
+                            obcaecati aliquam ducimus exercitationem.
+                        </div>
+                    </div>
+                    <div class="blog__list__item-bottom">
+                        <div class="blog__list__item-date">on July 19, 2016</div>
+                        <div class="blog__list__item-interactive">
+                            <button type="button" class="blog__list__item-share-btn blog__list__item-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                    viewBox="0 0 26 26">
+                                    <path
+                                        d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button type="button" class="blog__list__item-like-btn blog__list__item-btn">
+                                <img width="14" height="14" src="https://img.icons8.com/material-sharp/24/like--v1.png"
+                                    alt="like--v1" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog__list__item">
+                    <div class="blog__list__item-image blog__list__item-preview">
+                        <img src="../static/images/header_body/img_single_project_01-2zletwgwev4ggbhphdh79c.jpg" alt="">
+                    </div>
+                    <div class="blog__list__item-view">
+                        <div class="blog__list__item-content">
+                            <div class="blog__list__item-tag blog-content-item">Image hover</div>
+                            <div class="blog__list__item-title blog-content-item">i am a blog post title</div>
+                            <div class="blog__list__item-user blog-content-item">by John Pereina</div>
+                            <div class="blog__list__item-description blog-content-item">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio sint dignissimos
+                                repellat
+                                vero nesciunt saepe ipsam sit pariatur nemo voluptatem? Nesciunt eos saepe labore
+                                natus
+                                mollitia officiis. Explicabo, repellat amet, quia eaque, tenetur illum tempora harum
+                                obcaecati aliquam ducimus exercitationem.
+                            </div>
+                        </div>
+                        <div class="blog__list__item-bottom">
+                            <div class="blog__list__item-date blog-content-item">on July 19, 2016</div>
+                            <div class="blog__list__item-interactive">
+                                <button type="button" class="blog__list__item-share-btn blog__list__item-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                        viewBox="0 0 26 26">
+                                        <path
+                                            d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <button type="button" class="blog__list__item-like-btn blog__list__item-btn">
+                                    <img width="14" height="14"
+                                        src="https://img.icons8.com/material-sharp/24/like--v1.png" alt="like--v1" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog__list__item">
+                    <div class="blog__list__item-image">
+                        <img src="../static/images/header_body/04-2zleu28zg1q6t8jifba58g.jpg" alt="">
+                    </div>
+                    <div class="blog__list__item-content">
+                        <div class="blog__list__item-title">i am a blog post title</div>
+                        <div class="blog__list__item-user">by John Pereina</div>
+                        <div class="blog__list__item-description">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio sint dignissimos repellat
+                            vero nesciunt saepe ipsam sit pariatur nemo voluptatem? Nesciunt eos saepe labore natus
+                            mollitia officiis. Explicabo, repellat amet, quia eaque, tenetur illum tempora harum
+                            obcaecati aliquam ducimus exercitationem.
+                        </div>
+                    </div>
+                    <div class="blog__list__item-bottom">
+                        <div class="blog__list__item-date">on July 19, 2016</div>
+                        <div class="blog__list__item-interactive">
+                            <button type="button" class="blog__list__item-share-btn blog__list__item-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                    viewBox="0 0 26 26">
+                                    <path
+                                        d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button type="button" class="blog__list__item-like-btn blog__list__item-btn">
+                                <img width="14" height="14" src="https://img.icons8.com/material-sharp/24/like--v1.png"
+                                    alt="like--v1" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog__list__item">
+                    <video src="../static/video/572518_cup_coffee_whipped cream_3840x2160.mp4" controls></video>
+                </div>
+                <div class="blog__list__item">
+                    <div class="blog__list__item-image">
+                        <img src="../static/images/header_body/img_single_project_01-2zletwgwev4ggbhphdh79c.jpg" alt="">
+                    </div>
+                    <div class="blog__list__item-content">
+                        <div class="blog__list__item-title">i am a blog post title</div>
+                        <div class="blog__list__item-user">by John Pereina</div>
+                        <div class="blog__list__item-description">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio sint dignissimos repellat
+                            vero nesciunt saepe ipsam sit pariatur nemo voluptatem? Nesciunt eos saepe labore natus
+                            mollitia officiis. Explicabo, repellat amet, quia eaque, tenetur illum tempora harum
+                            obcaecati aliquam ducimus exercitationem.
+                        </div>
+                    </div>
+                    <div class="blog__list__item-bottom">
+                        <div class="blog__list__item-date">on July 19, 2016</div>
+                        <div class="blog__list__item-interactive">
+                            <button type="button" class="blog__list__item-share-btn blog__list__item-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                    viewBox="0 0 26 26">
+                                    <path
+                                        d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button type="button" class="blog__list__item-like-btn blog__list__item-btn">
+                                <img width="14" height="14" src="https://img.icons8.com/material-sharp/24/like--v1.png"
+                                    alt="like--v1" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog__list__item">
+                    <div class="blog__list__item-image">
+                        <img src="../static/images/header_body/img_single_project_01-2zletwgwev4ggbhphdh79c.jpg" alt="">
+                    </div>
+                    <div class="blog__list__item-content">
+                        <div class="blog__list__item-title">i am a blog post title</div>
+                        <div class="blog__list__item-user">by John Pereina</div>
+                        <div class="blog__list__item-description">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio sint dignissimos repellat
+                            vero nesciunt saepe ipsam sit pariatur nemo voluptatem? Nesciunt eos saepe labore natus
+                            mollitia officiis. Explicabo, repellat amet, quia eaque, tenetur illum tempora harum
+                            obcaecati aliquam ducimus exercitationem.
+                        </div>
+                    </div>
+                    <div class="blog__list__item-bottom">
+                        <div class="blog__list__item-date">on July 19, 2016</div>
+                        <div class="blog__list__item-interactive">
+                            <button type="button" class="blog__list__item-share-btn blog__list__item-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14"
+                                    viewBox="0 0 26 26">
+                                    <path
+                                        d="M 21 0 C 18.238281 0 16 2.238281 16 5 C 16 5.085938 16.027344 5.164063 16.03125 5.25 L 8.1875 9.1875 C 7.320313 8.457031 6.222656 8 5 8 C 2.238281 8 0 10.238281 0 13 C 0 15.761719 2.238281 18 5 18 C 6.222656 18 7.320313 17.542969 8.1875 16.8125 L 16.03125 20.75 C 16.027344 20.835938 16 20.914063 16 21 C 16 23.761719 18.238281 26 21 26 C 23.761719 26 26 23.761719 26 21 C 26 18.238281 23.761719 16 21 16 C 19.777344 16 18.679688 16.457031 17.8125 17.1875 L 9.96875 13.25 C 9.972656 13.164063 10 13.085938 10 13 C 10 12.914063 9.972656 12.835938 9.96875 12.75 L 17.8125 8.8125 C 18.679688 9.542969 19.777344 10 21 10 C 23.761719 10 26 7.761719 26 5 C 26 2.238281 23.761719 0 21 0 Z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button type="button" class="blog__list__item-like-btn blog__list__item-btn">
+                                <img width="14" height="14" src="https://img.icons8.com/material-sharp/24/like--v1.png"
+                                    alt="like--v1" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="blog__warning {{background}}">Articles weren`t found</p>
+        </div>
+        <button type="button" class="blog__load-btn load-btn">Load more</button>
+    </section>
+    <button type="button" class="aside-burger burger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </button>
+    <aside class="aside">
+        <div class="aside-inner">
+            <button class="aside__close-btn">&#10006;</button>
+            <form class="aside__search aside__item" action="/blog/search" method="post">
+                <input type="text" class="aside__search-input" placeholder="Search" name="search">
+                <span class="aside__search-predicted"></span>
+                <button type="submit" class="aside__search-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="15px" height="15px">
+                        <path
+                            d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z" />
+                    </svg>
+                </button>
+                <div class="search_results">No results</div>
+            </form>
+            <article class="aside__recent aside__item">
+                <div class="aside__recent__caption aside__caption">Recent posts</div>
+                <ul class="aside__recent__post-list">
+                    {% if recent|length > 0 %}
+                    {%for el in recent[-4: recent | length] | reverse%}
+                    <li class="aside__recent-item">
+                        <a href="/blog/{{el.id}}" class="aside__recent-item__link">
+                            {%if el.heading_image %}
+                            <div class="aside__recent-item__image">
+                                <img src="/load_post_heading/{{el.id}}" alt="">
+                            </div>
+                            {%endif%}
+                            <div class="aside__recent-item__info">
+                                <div class="aside__recent-item__title">{{el.caption}}
+                                </div>
+                                <div class="aside__recent-item__date">{{el.date.strftime('%B %d %Y')}}</div>
+                            </div>
+                        </a>
+                    </li>
+                    {%endfor%}
+                    {%else%}
+                    <p style="text-align: center;">Articles waren`t found</p>
+                    {%endif%}
+                </ul>
+            </article>
+            <article class="aside__tags aside__item">
+                <div class="aside__tags__caption aside__caption">popular tags</div>
+                <div class="aside__tags__body">
+                    <div class="aside__tags__list">
+                        <button class="aside__tags__list-item"
+                            data-filter=".aside__blog-filter--construction">construction</button>
+                        <button class="aside__tags__list-item"
+                            data-filter=".aside__blog-filter--engineering">engineering</button>
+                        <button class="aside__tags__list-item"
+                            data-filter=".aside__blog-filter--architecture">architecture</button>
+                        <button class="aside__tags__list-item"
+                            data-filter=".aside__blog-filter--structural_design">structural design</button>
+                        <button class="aside__tags__list-item" data-filter=".aside__blog-filter--civil_engineer">civil
+                            engineer</button>
+                        <button class="aside__tags__list-item"
+                            data-filter=".aside__blog-filter--industrial">industrial</button>
+                        <button class="aside__tags__list-item"
+                            data-filter=".aside__blog-filter--management">management</button>
+                        <button class="aside__tags__list-item"
+                            data-filter=".aside__blog-filter--mechanical">mechanical</button>
+                    </div>
+                </div>
+            </article>
+            <article class="aside__instagram aside__item">
+                <div class="aside__instagram__caption aside__caption">instagram</div>
+                <div class="aside__instagram__list">
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/01-2zleu1ve3uwlqd43rony0w.jpg" alt="">
+                        </div>
+                    </a>
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/03-2zleu24glr7016sn1g3hmo.jpg" alt="">
+                        </div>
+                    </a>
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/04-2zleu28zg1q6t8jifba58g.jpg" alt="">
+                        </div>
+                    </a>
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/05-2zlj0ujrqnmk369fr9ydxc.jpg" alt="">
+                        </div>
+                    </a>
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/06-2zlj0ujrqnmk369fr9ydxc.jpg" alt="">
+                        </div>
+                    </a>
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/bottle.jpg" alt="">
+                        </div>
+                    </a>
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/img_single_project_01-2zletwgwev4ggbhphdh79c.jpg"
+                                alt="">
+                        </div>
+                    </a>
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/table-with-tablecloth-and-chairs_176382-698.jpg"
+                                alt="">
+                        </div>
+                    </a>
+                    <a href="" class="aside__instagram-post">
+                        <div class="aside__instagram-post__image">
+                            <img src="../static/images/header_body/tumblr_nlv9bp2AGA1sfyngeo2_1280-mokhgqwoip430hckostcf4rafjnml63dn1z0lg53a0.jpg"
+                                alt="">
+                        </div>
+                    </a>
+                </div>
+            </article>
+            <a href="/create" class="create_post-btn">Create post</a>
+        </div>
+    </aside>
+</main>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="../static/js/mixitup.min.js"></script>
+<script src="../static/js/blog.js"></script>
+{% endblock %}
